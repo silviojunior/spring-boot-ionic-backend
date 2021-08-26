@@ -24,4 +24,9 @@ public class CategoriaService {
 			throw new ObjectNotFoundException("Categoria não encontrada! Id: " + id + ", Tipo: " + Categoria.class.getName());
 		});
 	}
+
+	public Categoria inserir(Categoria categoria) {
+		categoria.setId(null);
+		return categoriaRepository.save(categoria);
+	}
 }
