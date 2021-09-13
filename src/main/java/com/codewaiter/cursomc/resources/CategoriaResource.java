@@ -1,6 +1,8 @@
 package com.codewaiter.cursomc.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.codewaiter.cursomc.domain.Categoria;
+import com.codewaiter.cursomc.dto.CategoriaDTO;
 import com.codewaiter.cursomc.services.CategoriaService;
 
 @RestController
@@ -25,16 +28,32 @@ public class CategoriaResource {
 	private CategoriaService categoriaService;
 
 	@GetMapping(value="/{id}")
-	public ResponseEntity<Categoria> listar(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		
 		Categoria categoria = categoriaService.find(id);	
 		return ResponseEntity.ok().body(categoria);
 	}
+
+	@GetMapping
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		
+		List<Categoria> categorias = categoriaService.findAll();
+		List<CategoriaDTO> listaCategorias = new ArrayList<CategoriaDTO>();
+		
+		for(Categoria cat : categorias) {
+			listaCategorias.add(new CategoriaDTO(cat));
+		}
+		/**
+		 * Outra abordagem:
+		 * listaCategorias = categorias.stream().map(categoria -> new CategoriaDTO(categoria)).collect(Collectors.toList());
+		 */
+		return ResponseEntity.ok().body(listaCategorias);
+	}
 	
 	@PostMapping
-	public ResponseEntity<Void> inserir(@RequestBody Categoria categoria){
+	public ResponseEntity<Void> insert(@RequestBody Categoria categoria){
 		
-		categoria = categoriaService.inserir(categoria);
+		categoria = categoriaService.insert(categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
