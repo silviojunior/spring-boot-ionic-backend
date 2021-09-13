@@ -1,5 +1,6 @@
 package com.codewaiter.cursomc.resources;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +12,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.codewaiter.cursomc.domain.Cliente;
 import com.codewaiter.cursomc.dto.ClienteDTO;
+import com.codewaiter.cursomc.dto.NovoClienteDTO;
 import com.codewaiter.cursomc.services.ClienteService;
 
 @RestController
@@ -66,17 +70,16 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(listaClientes);
 	}
 	
-	/*
-	 * @PostMapping public ResponseEntity<Void> insert(@Valid @RequestBody
-	 * ClienteDTO clienteDTO){
-	 * 
-	 * Cliente cliente = clienteService.fromDTO(clienteDTO); cliente =
-	 * clienteService.insert(cliente); URI uri =
-	 * ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand
-	 * (cliente.getId()).toUri();
-	 * 
-	 * return ResponseEntity.created(uri).build(); }
-	 */	
+	@PostMapping
+	public ResponseEntity<Void> insert(@Valid @RequestBody NovoClienteDTO novoClienteDTO){
+		
+		Cliente cliente = clienteService.fromDTO(novoClienteDTO);
+		cliente = clienteService.insert(cliente);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId()).toUri();
+		
+		return ResponseEntity.created(uri).build();
+	}
+	
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody ClienteDTO clienteDTO){
 		
