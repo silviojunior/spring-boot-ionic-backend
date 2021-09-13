@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.codewaiter.cursomc.domain.Categoria;
+import com.codewaiter.cursomc.dto.CategoriaDTO;
 import com.codewaiter.cursomc.repositories.CategoriaRepository;
 import com.codewaiter.cursomc.services.exceptions.DataIntegrityException;
 import com.codewaiter.cursomc.services.exceptions.ObjectNotFoundException;
@@ -36,6 +37,10 @@ public class CategoriaService {
 		return categoriaRepository.save(categoria);
 	}
 
+	public Categoria fromDTO(CategoriaDTO categoriaDTO) {
+		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
+	}
+	
 	public Categoria update(Categoria categoria) {
 		find(categoria.getId());
 		return categoriaRepository.save(categoria);
