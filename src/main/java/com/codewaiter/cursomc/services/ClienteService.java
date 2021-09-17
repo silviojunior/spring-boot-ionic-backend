@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,9 @@ public class ClienteService {
 	@Autowired
 	EnderecoRepository enderecoRepository;
 	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 	public Cliente find(Integer id){
 		
 		Optional<Cliente> cliente = clienteRepository.findById(id);
@@ -41,12 +45,12 @@ public class ClienteService {
 	}
 	
 	public Cliente fromDTO(ClienteDTO clienteDTO) {
-		return new Cliente(clienteDTO.getId(), clienteDTO.getNome(), clienteDTO.getEmail(), null, null);
+		return new Cliente(clienteDTO.getId(), clienteDTO.getNome(), clienteDTO.getEmail(), null, null, null);
 	}
 	
 	public Cliente fromDTO(NovoClienteDTO novoClienteDTO) {
 		
-		Cliente cli = new Cliente(null, novoClienteDTO.getNome(), novoClienteDTO.getEmail(), novoClienteDTO.getCpfOuCnpj(), TipoCliente.toEnum(novoClienteDTO.getTipo()));
+		Cliente cli = new Cliente(null, novoClienteDTO.getNome(), novoClienteDTO.getEmail(), novoClienteDTO.getCpfOuCnpj(), TipoCliente.toEnum(novoClienteDTO.getTipo()), passwordEncoder.encode(novoClienteDTO.getSenha()));
 		Cidade cid = new Cidade(novoClienteDTO.getCidadeId(), null, null);
 		Endereco end = new Endereco(null, novoClienteDTO.getLogradouro(), novoClienteDTO.getNumero(), novoClienteDTO.getComplemento(), novoClienteDTO.getBairro(), novoClienteDTO.getCep(), cli, cid);
 		
