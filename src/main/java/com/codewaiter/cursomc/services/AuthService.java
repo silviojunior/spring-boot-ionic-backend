@@ -14,7 +14,7 @@ import com.codewaiter.cursomc.services.exceptions.ObjectNotFoundException;
 public class AuthService {
 
 	@Autowired
-	private AbstractEmailService emailService;
+	private SmtpEmailService emailService;
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
