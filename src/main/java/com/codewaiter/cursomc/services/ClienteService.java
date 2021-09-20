@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.codewaiter.cursomc.domain.Cidade;
 import com.codewaiter.cursomc.domain.Cliente;
 import com.codewaiter.cursomc.domain.Endereco;
+import com.codewaiter.cursomc.domain.enums.Perfil;
 import com.codewaiter.cursomc.domain.enums.TipoCliente;
 import com.codewaiter.cursomc.dto.ClienteDTO;
 import com.codewaiter.cursomc.dto.NovoClienteDTO;
 import com.codewaiter.cursomc.repositories.ClienteRepository;
 import com.codewaiter.cursomc.repositories.EnderecoRepository;
+import com.codewaiter.cursomc.security.User;
+import com.codewaiter.cursomc.services.exceptions.AuthorizationException;
 import com.codewaiter.cursomc.services.exceptions.DataIntegrityException;
 import com.codewaiter.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -37,6 +40,11 @@ public class ClienteService {
 	
 	public Cliente find(Integer id){
 		
+		User user = UserService.authenticatedUser();
+		
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso Negado!");
+		}
 		Optional<Cliente> cliente = clienteRepository.findById(id);
 		
 		return cliente.orElseThrow(() -> {
