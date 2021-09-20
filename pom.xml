@@ -18,6 +18,7 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -75,6 +76,18 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.12.70</version>
+		</dependency> 
+		 
+		<dependency> 
+		  <groupId>commons-io</groupId> 
+		  <artifactId>commons-io</artifactId> 
+		  <version>2.11.0</version>
 		</dependency>
 		
 	</dependencies>
