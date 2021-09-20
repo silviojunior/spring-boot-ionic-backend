@@ -30,10 +30,10 @@ import com.codewaiter.cursomc.services.exceptions.ObjectNotFoundException;
 public class ClienteService {
 
 	@Autowired
-	ClienteRepository clienteRepository;
+	private ClienteRepository clienteRepository;
 	
 	@Autowired
-	EnderecoRepository enderecoRepository;
+	private EnderecoRepository enderecoRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;

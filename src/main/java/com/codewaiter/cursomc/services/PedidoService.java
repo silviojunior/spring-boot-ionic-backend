@@ -27,25 +27,25 @@ import com.codewaiter.cursomc.services.exceptions.ObjectNotFoundException;
 public class PedidoService {
 
 	@Autowired
-	PedidoRepository pedidoRepository;
+	private PedidoRepository pedidoRepository;
 	
 	@Autowired
-	BoletoService boletoService;
+	private BoletoService boletoService;
 	
 	@Autowired
-	PagamentoRepository pagamentoRepository;
+	private PagamentoRepository pagamentoRepository;
 	
 	@Autowired
-	ProdutoService produtoService;
+	private ProdutoService produtoService;
 	
 	@Autowired
-	ItemPedidoRepository itemPedidoRepository;
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	@Autowired
-	ClienteService clienteService;
+	private ClienteService clienteService;
 	
 	@Autowired
-	EmailService emailService;
+	private EmailService emailService;
 	
 	public Pedido find(Integer id) {
 		
