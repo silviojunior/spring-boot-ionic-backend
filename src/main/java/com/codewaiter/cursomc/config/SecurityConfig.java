@@ -52,8 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
-		.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST_ONLY).permitAll()
-		.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET_ONLY).permitAll()
+			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST_ONLY).permitAll()
+			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET_ONLY).permitAll()
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
 			.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
