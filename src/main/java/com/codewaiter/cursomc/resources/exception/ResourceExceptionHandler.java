@@ -35,7 +35,7 @@ public class ResourceExceptionHandler {
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<StandardError> bodyValidation(MethodArgumentNotValidException e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
 		
 		ValidationError err = new ValidationError(System.currentTimeMillis(), HttpStatus.UNPROCESSABLE_ENTITY.value(), "Validation Error", e.getMessage(), request.getRequestURI());
 		
@@ -47,7 +47,7 @@ public class ResourceExceptionHandler {
 	}
 	
 	@ExceptionHandler(AuthorizationException.class)
-	public ResponseEntity<StandardError> objectNotFound(AuthorizationException e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
 		
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Authorization Error", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
